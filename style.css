@@ -1,72 +1,294 @@
-/* ==========================================================================
-Estilos Personalizados y Animaciones
-========================================================================== */
+/* IBM 3278 CRT Retro Styling */
+:root {
+  --term-green: #00ff66;
+  --term-amber: #ffb000;
+  --term-white: #e0e0e0;
+  --term-bg: #030a05;
+  --term-dim: #00441b;
+  --main-color: var(--term-green);
+}
+
+body.crt-theme-green {
+  --main-color: #00ff66;
+  --term-bg: #030a05;
+  --term-dim: #003311;
+}
+
+body.crt-theme-amber {
+  --main-color: #ffb000;
+  --term-bg: #0f0a00;
+  --term-dim: #442d00;
+}
+
+body.crt-theme-white {
+  --main-color: #e0e0e0;
+  --term-bg: #0a0a0a;
+  --term-dim: #333333;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+}
 
 body {
-background-color: #080c14;
-color: #f8fafc;
-font-family: 'Inter', sans-serif;
-overflow-x: hidden;
+  background-color: #000;
+  color: var(--main-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow: hidden;
 }
 
-/* Efecto Glassmorphism (Tarjetas Translúcidas) */
-.glass-card {
-background: rgba(15, 23, 42, 0.65);
-backdrop-filter: blur(16px);
--webkit-backdrop-filter: blur(16px);
-border: 1px solid rgba(255, 255, 255, 0.08);
+/* CRT Container & Screen Effects */
+.crt-container {
+  width: 100%;
+  max-width: 1000px;
+  height: 90vh;
+  background-color: var(--term-bg);
+  border: 4px solid var(--term-dim);
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0, 255, 102, 0.15), inset 0 0 50px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
-.glass-card:hover {
-border-color: rgba(99, 102, 241, 0.4);
-box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.2);
+.crt-container.no-crt {
+  box-shadow: none;
+  border-color: #333;
 }
 
-/* Gradientes de Texto */
-.gradient-text {
-background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+.crt-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+  z-index: 5;
 }
 
-.gradient-text-accent {
-background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+.scanline {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 6;
 }
 
-/* Borde con Gradiente Brillante */
-.gradient-border {
-position: relative;
+.no-crt .scanline,
+.no-crt .crt-overlay {
+  display: none;
 }
 
-.gradient-border::before {
-content: '';
-position: absolute;
-inset: -1px;
-border-radius: inherit;
-padding: 1px;
-background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.5));
--webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
--webkit-mask-composite: xor;
-mask-composite: exclude;
-pointer-events: none;
+/* Header */
+.terminal-header {
+  background-color: var(--term-dim);
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--main-color);
+  z-index: 10;
 }
 
-/* Personalización del Scrollbar */
-::-webkit-scrollbar {
-width: 8px;
+.header-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--main-color);
+  text-shadow: 0 0 8px var(--main-color);
 }
 
-::-webkit-scrollbar-track {
-background: #080c14;
+.sub-text {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-left: 10px;
 }
 
-::-webkit-scrollbar-thumb {
-background: #1e293b;
-border-radius: 4px;
+.color-picker {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-::-webkit-scrollbar-thumb:hover {
-background: #334155;
+.btn-color {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+
+.bg-green { background-color: #00ff66; }
+.bg-amber { background-color: #ffb000; }
+.bg-white { background-color: #ffffff; }
+
+.btn-toggle {
+  background: transparent;
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Terminal Main Screen */
+.terminal-screen {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-shadow: 0 0 5px var(--main-color);
+  z-index: 2;
+}
+
+.ascii-art {
+  font-size: 0.75rem;
+  line-height: 1.1;
+  margin-bottom: 15px;
+  color: var(--main-color);
+  opacity: 0.9;
+}
+
+.sys-info {
+  border: 1px dashed var(--main-color);
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+.highlight {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.cmd-keyword {
+  color: #fff;
+  background-color: var(--term-dim);
+  padding: 0 4px;
+}
+
+.blink-text {
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Dynamic Output Styles */
+.log-line {
+  margin-top: 8px;
+  border-left: 2px solid var(--main-color);
+  padding-left: 6px;
+}
+
+.log-time {
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
+.db-table-title {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #fff;
+  background-color: var(--term-dim);
+  padding: 2px 6px;
+}
+
+.db-row {
+  font-size: 0.85rem;
+  padding: 3px 0;
+  border-bottom: 1px dotted var(--term-dim);
+}
+
+.error-text { color: #ff5555; text-shadow: 0 0 5px #ff5555; }
+.success-text { color: #55ff55; text-shadow: 0 0 5px #55ff55; }
+.warn-text { color: #ffff55; }
+
+/* Input Bar */
+.terminal-input-bar {
+  display: flex;
+  align-items: center;
+  background-color: #000;
+  border-top: 2px solid var(--main-color);
+  padding: 8px 15px;
+  z-index: 10;
+}
+
+.prompt {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+#cmd-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--main-color);
+  font-size: 1rem;
+  text-shadow: 0 0 5px var(--main-color);
+}
+
+.btn-execute {
+  background: var(--main-color);
+  color: #000;
+  border: none;
+  font-weight: bold;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+/* PF Keys Bar */
+.pf-keys-bar {
+  display: flex;
+  gap: 5px;
+  background-color: var(--term-dim);
+  padding: 5px 15px;
+  z-index: 10;
+}
+
+.pf-keys-bar button {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
+  font-size: 0.75rem;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.pf-keys-bar button:hover {
+  background: var(--main-color);
+  color: #000;
+}
+
+.pf-keys-bar .pf-db {
+  border-color: #fff;
+  font-weight: bold;
+}
+
+/* Status Bar */
+.ibm-status-bar {
+  background-color: #000;
+  border-top: 1px solid var(--term-dim);
+  padding: 4px 15px;
+  font-size: 0.75rem;
+  display: flex;
+  gap: 20px;
+  color: var(--main-color);
+  opacity: 0.8;
+  z-index: 10;
+}
+
+.flex-right {
+  margin-left: auto;
 }
