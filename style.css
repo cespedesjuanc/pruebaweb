@@ -1,0 +1,72 @@
+/* ==========================================================================
+Estilos Personalizados y Animaciones
+========================================================================== */
+
+body {
+background-color: #080c14;
+color: #f8fafc;
+font-family: 'Inter', sans-serif;
+overflow-x: hidden;
+}
+
+/* Efecto Glassmorphism (Tarjetas Translúcidas) */
+.glass-card {
+background: rgba(15, 23, 42, 0.65);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card:hover {
+border-color: rgba(99, 102, 241, 0.4);
+box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.2);
+}
+
+/* Gradientes de Texto */
+.gradient-text {
+background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.gradient-text-accent {
+background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+/* Borde con Gradiente Brillante */
+.gradient-border {
+position: relative;
+}
+
+.gradient-border::before {
+content: '';
+position: absolute;
+inset: -1px;
+border-radius: inherit;
+padding: 1px;
+background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.5));
+-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+pointer-events: none;
+}
+
+/* Personalización del Scrollbar */
+::-webkit-scrollbar {
+width: 8px;
+}
+
+::-webkit-scrollbar-track {
+background: #080c14;
+}
+
+::-webkit-scrollbar-thumb {
+background: #1e293b;
+border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #334155;
+}
