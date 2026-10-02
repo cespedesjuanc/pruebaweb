@@ -1,165 +1,409 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Página de Inicio - Demo</title>
-  <style>
-    /* Estilos generales / Reset básico */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <title>NEXUS AI — La Plataforma del Futuro</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Fuentes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background-color: #f8f9fa;
+  <!-- Configuración de Tailwind -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            accent: {
+              cyan: '#06b6d4',
+              purple: '#8b5cf6',
+              pink: '#ec4899',
+            },
+            dark: {
+              bg: '#080c14',
+              card: '#0f172a',
+              border: 'rgba(255, 255, 255, 0.08)',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
     }
+  </script>
 
-    /* Navegación */
-    header {
-      background-color: #1a1a1a;
-      color: #fff;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #00adb5;
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 1.5rem;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #00adb5;
-    }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, #222831 0%, #393e46 100%);
-      color: #fff;
-      text-align: center;
-      padding: 5rem 1rem;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      color: #eeeeee;
-    }
-
-    .btn {
-      display: inline-block;
-      background-color: #00adb5;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #00888e;
-    }
-
-    /* Sección de Características */
-    .features {
-      max-width: 1100px;
-      margin: 3rem auto;
-      padding: 0 1rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-
-    .card {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-
-    .card h3 {
-      margin-bottom: 1rem;
-      color: #222831;
-    }
-
-    /* Footer */
-    footer {
-      background-color: #1a1a1a;
-      color: #aaa;
-      text-align: center;
-      padding: 1.5rem;
-      margin-top: 3rem;
-    }
-  </style>
+  <!-- Archivo CSS Externo -->
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="antialiased selection:bg-brand-500 selection:text-white">
 
-  <!-- Encabezado y Menú -->
-  <header>
-    <div class="logo">MiSitio</div>
-    <nav>
-      <ul>
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Servicios</a></li>
-        <li><a href="#">Nosotros</a></li>
-        <li><a href="#">Contacto</a></li>
-      </ul>
-    </nav>
+  <!-- BACKGROUND GLOW EFFECTS -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-600/20 rounded-full blur-[120px] animate-pulse-slow"></div>
+    <div class="absolute top-1/3 -right-40 w-96 h-96 bg-accent-purple/20 rounded-full blur-[120px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-accent-cyan/15 rounded-full blur-[120px] animate-pulse-slow" style="animation-delay: 4s;"></div>
+  </div>
+
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-dark-bg/70 border-b border-dark-border transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-accent-purple to-accent-cyan p-[1px] transition-transform duration-300 group-hover:scale-105">
+          <div class="w-full h-full bg-dark-bg rounded-[11px] flex items-center justify-center">
+            <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+        </div>
+        <span class="font-bold text-xl tracking-wider text-white">NEXUS<span class="text-brand-400">.AI</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#features" class="hover:text-white transition-colors">Características</a>
+        <a href="#analytics" class="hover:text-white transition-colors">Analítica</a>
+        <a href="#pricing" class="hover:text-white transition-colors">Precios</a>
+        <a href="#testimonials" class="hover:text-white transition-colors">Testimonios</a>
+      </nav>
+
+      <!-- CTA Action Buttons -->
+      <div class="hidden md:flex items-center gap-4">
+        <a href="#" class="text-sm font-medium text-slate-300 hover:text-white transition-colors px-3 py-2">Iniciar Sesión</a>
+        <a href="#pricing" class="relative group overflow-hidden rounded-xl p-[1px] focus:outline-none">
+          <span class="absolute inset-0 bg-gradient-to-r from-brand-500 via-accent-purple to-accent-cyan rounded-xl"></span>
+          <span class="relative block px-5 py-2.5 bg-dark-bg rounded-[11px] text-xs font-semibold text-white tracking-wide uppercase transition-all duration-300 group-hover:bg-transparent">
+            Probar Gratis
+          </span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuBtn" class="md:hidden p-2 text-slate-400 hover:text-white focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden border-b border-dark-border bg-dark-bg/95 px-4 pt-2 pb-6 space-y-3">
+      <a href="#features" class="block py-2 text-slate-300 hover:text-white">Características</a>
+      <a href="#analytics" class="block py-2 text-slate-300 hover:text-white">Analítica</a>
+      <a href="#pricing" class="block py-2 text-slate-300 hover:text-white">Precios</a>
+      <div class="pt-4 border-t border-dark-border flex flex-col gap-3">
+        <a href="#" class="text-center py-2 text-sm text-slate-300">Iniciar Sesión</a>
+        <a href="#pricing" class="text-center py-2.5 bg-brand-600 rounded-xl text-sm font-semibold text-white">Probar Gratis</a>
+      </div>
+    </div>
   </header>
 
-  <!-- Sección Principal (Hero) -->
-  <section class="hero">
-    <h1>Bienvenido a nuestro sitio web</h1>
-    <p>Una plantilla moderna y responsive lista para probar proyectos.</p>
-    <a href="#" class="btn">Comenzar</a>
+  <section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-brand-500/30 mb-8 animate-float">
+        <span class="flex h-2 w-2 rounded-full bg-accent-cyan animate-ping"></span>
+        <span class="text-xs font-medium text-slate-300">Presentando Nexus AI v2.0 — <span class="text-brand-400 font-semibold">Ver novedades &rarr;</span></span>
+      </div>
+
+      <!-- Hero Title -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-5xl mx-auto leading-[1.15] mb-6">
+        La plataforma inteligente para el <span class="gradient-text-accent">desarrollo del futuro</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
+        Automatiza tus flujos de trabajo, optimiza bases de datos en tiempo real y despliega modelos analíticos predictivos con precisión milimétrica.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <a href="#" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-600 via-accent-purple to-brand-500 text-white font-semibold text-base shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:scale-[1.02] transition-all duration-300">
+          Comenzar Gratis Ahora
+        </a>
+        <a href="#analytics" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-slate-200 hover:text-white font-semibold text-base hover:bg-slate-800/50 transition-all duration-300 flex items-center justify-center gap-2">
+          <svg class="w-5 h-5 text-accent-cyan" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
+          </svg>
+          Ver Demo Interactivo
+        </a>
+      </div>
+
+      <!-- Dashboard Mockup -->
+      <div class="relative max-w-5xl mx-auto rounded-2xl p-2 glass-card gradient-border shadow-2xl shadow-brand-950/50">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-dark-border bg-slate-950/40 rounded-t-xl">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+          </div>
+          <div class="text-xs font-mono text-slate-500 bg-slate-900/80 px-3 py-1 rounded-md border border-slate-800">
+            nexus-core.cluster-us-east.internal
+          </div>
+          <div class="text-xs font-mono text-slate-400">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1"></span> LIVE
+          </div>
+        </div>
+
+        <div class="p-6 bg-slate-950/80 rounded-b-xl grid grid-cols-1 md:grid-cols-3 gap-4 text-left font-mono">
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <span class="text-xs text-slate-400 block mb-1">PROCESAMIENTO IA</span>
+            <div class="text-2xl font-bold text-white mb-2">99.8% <span class="text-xs font-normal text-emerald-400">+4.2%</span></div>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-brand-500 to-accent-cyan h-full w-[94%]"></div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <span class="text-xs text-slate-400 block mb-1">LATENCIA DE RED</span>
+            <div class="text-2xl font-bold text-white mb-2">12.4 ms <span class="text-xs font-normal text-emerald-400">-1.8ms</span></div>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-accent-purple to-accent-pink h-full w-[88%]"></div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <span class="text-xs text-slate-400 block mb-1">PETICIONES / SEG</span>
+            <div class="text-2xl font-bold text-white mb-2">48.2k <span class="text-xs font-normal text-brand-400">&uarr; Peak</span></div>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-accent-cyan to-emerald-400 h-full w-[76%]"></div>
+            </div>
+          </div>
+
+          <div class="md:col-span-3 p-4 rounded-xl bg-slate-950 border border-slate-800/80 text-xs leading-relaxed text-slate-300">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3 text-slate-500">
+              <span>stream_pipeline.py</span>
+              <button onclick="copyCodeSnippet(this)" class="hover:text-white transition-colors flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                Copiar
+              </button>
+            </div>
+            <p><span class="text-accent-purple">import</span> nexus <span class="text-accent-purple">as</span> nx</p>
+            <p class="text-slate-500"># Inicializando cluster cuántico con modelos de IA</p>
+            <p>client = nx.Client(api_key=<span class="text-emerald-400">"nx_live_9983x_sec"</span>, region=<span class="text-emerald-400">"us-east"</span>)</p>
+            <p>stream = client.neural_pipeline.connect(auto_scale=<span class="text-accent-cyan">True</span>)</p>
+            <p class="text-slate-400">>> status: <span class="text-emerald-400">CONNECTED (0.003s)</span> — 128 Nodos activos</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- Grilla de Características -->
-  <main class="features">
-    <div class="card">
-      <h3>Diseño Limpio</h3>
-      <p>Estructura clara y adaptable a distintos dispositivos y pantallas.</p>
+  <section class="py-12 border-y border-dark-border bg-slate-950/30 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-xs font-semibold uppercase tracking-widest text-slate-500 mb-8">
+        Confían en la tecnología de Nexus infraestructuras globales
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+        <div class="flex justify-center items-center font-bold text-xl text-slate-300 gap-2">
+          <svg class="w-6 h-6 text-brand-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          CYBERDYN
+        </div>
+        <div class="flex justify-center items-center font-bold text-xl text-slate-300 gap-2">
+          <svg class="w-6 h-6 text-accent-cyan" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16z"/></svg>
+          QUANTUM
+        </div>
+        <div class="flex justify-center items-center font-bold text-xl text-slate-300 gap-2">
+          <svg class="w-6 h-6 text-accent-purple" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          SYNTHEX
+        </div>
+        <div class="flex justify-center items-center font-bold text-xl text-slate-300 gap-2">
+          <svg class="w-6 h-6 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>
+          VORTEX
+        </div>
+        <div class="col-span-2 md:col-span-1 flex justify-center items-center font-bold text-xl text-slate-300 gap-2">
+          <svg class="w-6 h-6 text-accent-pink" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2z"/></svg>
+          HYPERION
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <h3>Rápido y Liviano</h3>
-      <p>Código optimizado listo para editar en HTML y CSS puro.</p>
-    </div>
-    <div class="card">
-      <h3>Fácil Personalización</h3>
-      <p>Modifica colores, fuentes y contenido según las necesidades de tu proyecto.</p>
-    </div>
-  </main>
+  </section>
 
-  <!-- Pie de página -->
-  <footer>
-    <p>&copy; 2026 MiSitio. Todos los derechos reservados.</p>
+  <section id="features" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-3">CARACTERÍSTICAS PRINCIPALES</h2>
+        <p class="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">Diseñado para la velocidad extrema</p>
+        <p class="text-slate-400 text-base sm:text-lg">Herramientas creadas específicamente para desarrolladores, científicos de datos y equipos de alto rendimiento.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="glass-card p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400 mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Motor Predictivo AI</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Algoritmos adaptativos que se anticipan a los fallos del sistema antes de que afecten la experiencia del usuario.</p>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 rounded-xl bg-accent-cyan/10 border border-accent-cyan/30 flex items-center justify-center text-accent-cyan mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Multi-Cloud Mesh</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Despliegue unificado en AWS, Google Cloud y Azure con latencia ultrabaja y sincronización automática.</p>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 rounded-xl bg-accent-purple/10 border border-accent-purple/30 flex items-center justify-center text-accent-purple mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Analítica en Tiempo Real</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Métricas instantáneas visualizadas en tableros personalizables con exportación en tiempo real.</p>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Seguridad Zero-Trust</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Encriptación de punto a punto de grado militar, cumplimiento SOC2 Type II y aislamiento de datos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="analytics" class="py-20 border-y border-dark-border bg-slate-950/40 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl sm:text-5xl font-extrabold text-white mb-2 gradient-text">99.99%</div>
+          <p class="text-slate-400 text-xs sm:text-sm font-medium uppercase tracking-wider">Disponibilidad SLA</p>
+        </div>
+        <div>
+          <div class="text-4xl sm:text-5xl font-extrabold text-white mb-2 gradient-text">+10B</div>
+          <p class="text-slate-400 text-xs sm:text-sm font-medium uppercase tracking-wider">Peticiones diarias</p>
+        </div>
+        <div>
+          <div class="text-4xl sm:text-5xl font-extrabold text-white mb-2 gradient-text">&lt; 5ms</div>
+          <p class="text-slate-400 text-xs sm:text-sm font-medium uppercase tracking-wider">Latencia global</p>
+        </div>
+        <div>
+          <div class="text-4xl sm:text-5xl font-extrabold text-white mb-2 gradient-text">160+</div>
+          <p class="text-slate-400 text-xs sm:text-sm font-medium uppercase tracking-wider">Países servidos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-3">PLANES Y PRECIOS</h2>
+        <p class="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">Transparente. Escala a tu ritmo.</p>
+        <p class="text-slate-400 text-base sm:text-lg">Prueba gratuita de 14 días en todos los planes. Sin tarjeta de crédito.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-white mb-2">Developer</h3>
+            <p class="text-slate-400 text-xs mb-6">Ideal para proyectos personales y startups en fase temprana.</p>
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-extrabold text-white">$29</span>
+              <span class="text-slate-400 text-sm">/ mes</span>
+            </div>
+            <ul class="space-y-3 text-sm text-slate-300 mb-8">
+              <li class="flex items-center gap-3"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Hasta 5 proyectos</li>
+              <li class="flex items-center gap-3"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 1,000,000 Peticiones API</li>
+              <li class="flex items-center gap-3"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Analítica básica</li>
+            </ul>
+          </div>
+          <button class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-colors">Elegir Developer</button>
+        </div>
+
+        <div class="glass-card gradient-border p-8 rounded-2xl flex flex-col justify-between relative bg-slate-900/90 shadow-2xl shadow-brand-500/10">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-500 to-accent-purple text-white text-xs font-bold uppercase tracking-wider shadow-lg">
+            MÁS POPULAR
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white mb-2">Pro Business</h3>
+            <p class="text-slate-400 text-xs mb-6">Para equipos en crecimiento que requieren alto rendimiento.</p>
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-extrabold text-white">$89</span>
+              <span class="text-slate-400 text-sm">/ mes</span>
+            </div>
+            <ul class="space-y-3 text-sm text-slate-300 mb-8">
+              <li class="flex items-center gap-3"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Proyectos ilimitados</li>
+              <li class="flex items-center gap-3"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 25,000,000 Peticiones API</li>
+              <li class="flex items-center gap-3"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Analítica IA Avanzada</li>
+            </ul>
+          </div>
+          <button class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-purple text-white font-semibold text-sm shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-all">Comenzar Prueba Pro</button>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-white mb-2">Enterprise</h3>
+            <p class="text-slate-400 text-xs mb-6">Infraestructura dedicada y SLAs personalizados.</p>
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-extrabold text-white">Personalizado</span>
+            </div>
+            <ul class="space-y-3 text-sm text-slate-300 mb-8">
+              <li class="flex items-center gap-3"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Nodos e Infraestructura dedicada</li>
+              <li class="flex items-center gap-3"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> SLA de 99.99% garantizado</li>
+            </ul>
+          </div>
+          <button class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-colors">Contactar Ventas</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-dark-border bg-slate-950/80 pt-16 pb-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>&copy; 2026 NEXUS AI Technologies Inc. Todos los derechos reservados.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-slate-400">Privacidad</a>
+          <a href="#" class="hover:text-slate-400">Términos</a>
+        </div>
+      </div>
+    </div>
   </footer>
 
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    function copyCodeSnippet(button) {
+      const code = `import nexus as nx\nclient = nx.Client(api_key="nx_live_9983x_sec", region="us-east")`;
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = button.innerHTML;
+        button.innerHTML = `<span class="text-emerald-400">¡Copiado!</span>`;
+        setTimeout(() => button.innerHTML = originalText, 2000);
+      });
+    }
+  </script>
 </body>
 </html>
