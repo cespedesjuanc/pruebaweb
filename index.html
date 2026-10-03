@@ -44,15 +44,16 @@
 
       <!-- Content Area -->
       <div id="terminal-content">
-        <p class="highlight">SYSTEM COMMANDS LIST:</p>
-        <p>- <span class="cmd-keyword">db</span> / <span class="cmd-keyword">logs</span> : Query all logs from Supabase database (or press PF9)</p>
-        <p>- <span class="cmd-keyword">insert [msg]</span> : Insert a custom log into Supabase</p>
-        <p>- <span class="cmd-keyword">status</span> : Check mainframe & DB status (PF1)</p>
-        <p>- <span class="cmd-keyword">services</span> : Display active cybersecurity shields (PF2)</p>
-        <p>- <span class="cmd-keyword">scan</span> : Perform vulnerability assessment (PF3)</p>
-        <p>- <span class="cmd-keyword">clear</span> : Clear terminal screen (PF12)</p>
+        <p class="highlight">SYSTEM COMMANDS SUMMARY:</p>
+        <p>- <span class="cmd-keyword">help</span> : Muestra la lista completa de comandos disponibles</p>
+        <p>- <span class="cmd-keyword">db</span> / <span class="cmd-keyword">logs</span> : Consultar registros de la base de datos Supabase (PF9)</p>
+        <p>- <span class="cmd-keyword">insert [msg]</span> : Insertar un nuevo log en Supabase</p>
+        <p>- <span class="cmd-keyword">count</span> : Ver cantidad de filas en la base de datos</p>
+        <p>- <span class="cmd-keyword">status</span> : Estado del procesador y memoria (PF1)</p>
+        <p>- <span class="cmd-keyword">netstat</span> / <span class="cmd-keyword">scan</span> : Herramientas de analisis de red y seguridad (PF2/PF3)</p>
+        <p>- <span class="cmd-keyword">clear</span> : Limpiar pantalla de la terminal (PF12)</p>
         <br>
-        <p class="blink-text">>>> TYPE A COMMAND OR CLICK FUNCTION KEYS BELOW <<<</p>
+        <p class="blink-text">>>> INGRESE UN COMANDO O PRESIONE LAS TECLAS PF ABAJO <<<</p>
       </div>
 
       <!-- Dynamic Output Area -->
@@ -62,14 +63,14 @@
     <!-- Console Input Line -->
     <div class="terminal-input-bar">
       <span class="prompt">COMMAND ==&gt;</span>
-      <input type="text" id="cmd-input" placeholder="Type command here..." autofocus autocomplete="off" spellcheck="false">
+      <input type="text" id="cmd-input" placeholder="Escribe un comando (ej: help, db, netstat)..." autofocus autocomplete="off" spellcheck="false">
       <button onclick="processCommand()" class="btn-execute">EXECUTE</button>
     </div>
 
     <!-- Quick PF Keys Grid -->
     <div class="pf-keys-bar">
       <button onclick="runPF(1)">PF1: STATUS</button>
-      <button onclick="runPF(2)">PF2: SHIELDS</button>
+      <button onclick="runPF(2)">PF2: NETSTAT</button>
       <button onclick="runPF(3)">PF3: SCAN</button>
       <button onclick="runPF(9)" class="pf-db">PF9: QUERY DB</button>
       <button onclick="runPF(12)">PF12: CLEAR</button>
@@ -79,7 +80,7 @@
     <footer class="ibm-status-bar">
       <span class="status-item">ONLINE</span>
       <span class="status-item">LU: MAINFRAME_01</span>
-      <span class="status-item" id="db-indicator">DB: DISCONNECTED</span>
+      <span class="status-item" id="db-indicator">DB: CONECTANDO...</span>
       <span class="status-item flex-right" id="clock">00:00:00</span>
     </footer>
   </div>
@@ -88,7 +89,7 @@
   <script src="conexion.js"></script>
   <script src="consultas.js"></script>
 
-  <!-- Terminal UI Interactions -->
+  <!-- Terminal Logic & Commands -->
   <script>
     // Theme Switcher
     function setTheme(theme) {
@@ -129,43 +130,148 @@
       input.value = '';
 
       const lowerCmd = cmd.toLowerCase();
+      const args = cmd.split(' ').slice(1);
 
-      if (lowerCmd === 'clear') {
+      // --- LIMPIEZA & AYUDA ---
+      if (lowerCmd === 'clear' || lowerCmd === 'cls') {
         output.innerHTML = '';
         return;
       }
 
-      if (lowerCmd === 'db' || lowerCmd === 'logs') {
-        output.innerHTML += `<div>[DB] Fetching records from Supabase...</div>`;
+      if (lowerCmd === 'help') {
+        output.innerHTML += `
+          <div class="db-table-title">--- GUIA DE COMANDOS MAINFRAME ---</div>
+          <div><span class="cmd-keyword">db / logs</span> : Consultar ultimos registros en Supabase</div>
+          <div><span class="cmd-keyword">insert [msg]</span> : Insertar log manual en Supabase</div>
+          <div><span class="cmd-keyword">count</span> : Ver total de registros en la BD</div>
+          <div><span class="cmd-keyword">status</span> : Estado general del sistema e IBM 370</div>
+          <div><span class="cmd-keyword">netstat</span> : Muestra puertos y conexiones de red</div>
+          <div><span class="cmd-keyword">scan</span> : Analisis de vulnerabilidades en puertos</div>
+          <div><span class="cmd-keyword">ping [host]</span> : Probar latencia con envio ICMP</div>
+          <div><span class="cmd-keyword">whoami</span> : Ver credenciales de operador actual</div>
+          <div><span class="cmd-keyword">date / time</span> : Hora y fecha oficial del mainframe</div>
+          <div><span class="cmd-keyword">matrix</span> : Activar lluvia de codigo binario</div>
+          <div><span class="cmd-keyword">clear</span> : Limpiar la pantalla</div>
+        `;
+      }
+
+      // --- BASE DE DATOS (SUPABASE) ---
+      else if (lowerCmd === 'db' || lowerCmd === 'logs') {
+        output.innerHTML += `<div>[DB] Consultando registros en Supabase...</div>`;
         const res = await window.obtenerLogsTerminal();
         if (res.error) {
           output.innerHTML += `<div class="error-text">[DB ERROR] ${res.error}</div>`;
         } else {
-          let html = `<div class="db-table-title">--- SUPABASE DATABASE RECORDS (${res.data.length}) ---</div>`;
+          let html = `<div class="db-table-title">--- REGISTROS EN SUPABASE (${res.data.length}) ---</div>`;
           res.data.forEach(row => {
             html += `<div class="db-row">ID: ${row.id} | USER: ${row.usuario || 'SYS'} | CMD: <span class="highlight">${row.comando}</span> | RES: ${row.resultado}</div>`;
           });
           output.innerHTML += html;
         }
-      } else if (lowerCmd.startsWith('insert ')) {
+      }
+
+      else if (lowerCmd.startsWith('insert ')) {
         const textToInsert = cmd.substring(7);
-        output.innerHTML += `<div>[DB] Inserting record into Supabase: "${textToInsert}"...</div>`;
-        const result = await window.guardarLogTerminal('USER_INPUT', textToInsert, 'OPERATOR');
+        output.innerHTML += `<div>[DB] Insertando registro: "${textToInsert}"...</div>`;
+        const result = await window.guardarLogTerminal('INSERT_MANUAL', textToInsert, 'SYSOPER');
         if (result) {
-          output.innerHTML += `<div class="success-text">[DB SUCCESS] Record inserted successfully!</div>`;
+          output.innerHTML += `<div class="success-text">[DB OK] Registro almacenado en Supabase con exito.</div>`;
         } else {
-          output.innerHTML += `<div class="error-text">[DB ERROR] Failed to insert record.</div>`;
+          output.innerHTML += `<div class="error-text">[DB ERROR] Fallo la insercion en Supabase.</div>`;
         }
-      } else if (lowerCmd === 'status') {
-        output.innerHTML += `<div>[SYS] MAINFRAME IBM 3278 CPU: 12% | MEM: 640KB | SECURITY: OPTIMAL</div>`;
-      } else if (lowerCmd === 'services') {
-        output.innerHTML += `<div>[SEC] SHIELDS ACTIVE: [X] FIREWALL [X] IDS/IPS [X] DB_ENCRYPTION</div>`;
-      } else if (lowerCmd === 'scan') {
-        output.innerHTML += `<div>[SCAN] INITIATING VULNERABILITY SCAN... ALL PORTS SECURE.</div>`;
-      } else {
-        output.innerHTML += `<div class="warn-text">[SYS] COMMAND NOT RECOGNIZED. TRY 'db', 'status', 'services', 'scan', OR 'insert [msg]'.</div>`;
-        // Save unknown attempt to DB
-        window.guardarLogTerminal(cmd, 'UNKNOWN_COMMAND', 'GUEST');
+      }
+
+      else if (lowerCmd === 'count') {
+        output.innerHTML += `<div>[DB] Contando registros en la tabla 'logs_terminal'...</div>`;
+        const db = window.supabaseClient.get();
+        if (db) {
+          const { count, error } = await db.from('logs_terminal').select('*', { count: 'exact', head: true });
+          if (error) {
+            output.innerHTML += `<div class="error-text">[DB ERROR] ${error.message}</div>`;
+          } else {
+            output.innerHTML += `<div class="success-text">[DB OK] Total de registros en la base de datos: ${count}</div>`;
+          }
+        }
+      }
+
+      // --- RED Y CIBERSEGURIDAD ---
+      else if (lowerCmd === 'netstat') {
+        output.innerHTML += `
+          <div class="db-table-title">--- CONEXIONES DE RED ACTIVAS ---</div>
+          <div>PROTO | DIRECCION LOCAL          | DIRECCION REMOTA       | ESTADO</div>
+          <div>TCP   | 127.0.0.1:23 (TELNET)    | 192.168.1.45:5122     | ESTABLISHED</div>
+          <div>TCP   | 0.0.0.0:443 (HTTPS)      | 104.18.32.7:443       | LISTEN</div>
+          <div>UDP   | 127.0.0.1:53 (DNS)        | *:*                    | ACTIVE</div>
+        `;
+        window.guardarLogTerminal('NETSTAT', 'CONEXIONES_REVISADAS', 'NETSEC');
+      }
+
+      else if (lowerCmd.startsWith('ping')) {
+        const target = args[0] || '127.0.0.1';
+        output.innerHTML += `<div>[NET] Enviando paquetes ICMP a ${target}...</div>`;
+        setTimeout(() => {
+          output.innerHTML += `
+            <div>64 bytes desde ${target}: icmp_seq=1 ttl=64 time=1.2 ms</div>
+            <div>64 bytes desde ${target}: icmp_seq=2 ttl=64 time=0.9 ms</div>
+            <div class="success-text">[NET OK] Transmision completada sin perdida de paquetes.</div>
+          `;
+          document.getElementById('screen').scrollTop = document.getElementById('screen').scrollHeight;
+        }, 600);
+      }
+
+      else if (lowerCmd === 'scan') {
+        output.innerHTML += `<div>[SCAN] Escaneando puertos del mainframe IBM System/370...</div>`;
+        setTimeout(() => {
+          output.innerHTML += `
+            <div>[PORT 21/FTP]   -- BLOQUEADO (FIREWALL)</div>
+            <div>[PORT 23/TELNET] -- ABIERTO (ENCRIPTADO EN3270)</div>
+            <div>[PORT 80/HTTP]   -- REDIRIGIDO A 443</div>
+            <div>[PORT 443/HTTPS] -- ABIERTO (TLS 1.3)</div>
+            <div class="success-text">[SCAN COMPLETE] No se detectaron vulnerabilidades criticas.</div>
+          `;
+          document.getElementById('screen').scrollTop = document.getElementById('screen').scrollHeight;
+        }, 800);
+        window.guardarLogTerminal('SCAN', 'PUERTOS_VERIFICADOS', 'AUDITOR');
+      }
+
+      // --- INFORMACION DEL SISTEMA ---
+      else if (lowerCmd === 'status') {
+        output.innerHTML += `
+          <div>[SYS] MAINFRAME OPERATING SYSTEM IBM 3278 MODEL 2</div>
+          <div>[SYS] UPTIME: 142 DIAS, 08 HORAS, 12 MINS</div>
+          <div>[SYS] USO DE CPU: 8.4% | MEMORIA LIBRE: 412 KB / 640 KB</div>
+          <div>[SYS] MVT / TSO EN EXECUCION</div>
+        `;
+      }
+
+      else if (lowerCmd === 'whoami') {
+        output.innerHTML += `
+          <div>USUARIO: <span class="highlight">SYSOPER_MAIN</span></div>
+          <div>NIVEL DE ACCESO: ADMINISTRADOR DE SISTEMA (LEVEL 0)</div>
+          <div>TERMINAL: LU_MAINFRAME_01 (192.168.1.10)</div>
+        `;
+      }
+
+      else if (lowerCmd === 'date' || lowerCmd === 'time') {
+        const ahora = new Date();
+        output.innerHTML += `<div>[CLOCK] FECHA Y HORA OFICIAL DEL SISTEMA: ${ahora.toLocaleString()}</div>`;
+      }
+
+      // --- COMANDO RECREATIVO ---
+      else if (lowerCmd === 'matrix') {
+        output.innerHTML += `
+          <div class="success-text">
+            01001001 01000010 01001101 00100000 00110011 00110012 00110111 00111000<br>
+            SYSTEM INITIALIZED... WAKE UP, OPERATOR...<br>
+            THE MAINFRAME HAS YOU...
+          </div>
+        `;
+      }
+
+      // --- COMANDO DESCONOCIDO ---
+      else {
+        output.innerHTML += `<div class="warn-text">[SYS] COMANDO '${cmd}' NO RECONOCIDO. ESCRIBE 'help' PARA VER LA LISTA.</div>`;
+        window.guardarLogTerminal(cmd, 'COMANDO_DESCONOCIDO', 'GUEST');
       }
 
       document.getElementById('screen').scrollTop = document.getElementById('screen').scrollHeight;
@@ -173,24 +279,24 @@
 
     function runPF(num) {
       if (num === 1) { document.getElementById('cmd-input').value = 'status'; processCommand(); }
-      if (num === 2) { document.getElementById('cmd-input').value = 'services'; processCommand(); }
+      if (num === 2) { document.getElementById('cmd-input').value = 'netstat'; processCommand(); }
       if (num === 3) { document.getElementById('cmd-input').value = 'scan'; processCommand(); }
       if (num === 9) { document.getElementById('cmd-input').value = 'db'; processCommand(); }
       if (num === 12) { document.getElementById('cmd-input').value = 'clear'; processCommand(); }
     }
 
-    // Test DB Connection on startup
+    // Comprobar conexion con Supabase al inicio
     window.addEventListener('DOMContentLoaded', async () => {
       setTimeout(async () => {
         const banner = document.getElementById('db-status-banner');
         const dbInd = document.getElementById('db-indicator');
         const res = await window.obtenerLogsTerminal();
         if (res.error) {
-          banner.innerHTML = `<span class="error-text">[DB WARNING] Could not connect to Supabase table 'logs_terminal'. Ensure you ran the SQL query in Supabase!</span>`;
+          banner.innerHTML = `<span class="error-text">[DB WARNING] No se pudo conectar a la tabla 'logs_terminal' en Supabase. Revisa que ejecutaste la consulta SQL.</span>`;
           dbInd.innerText = 'DB: ERROR';
           dbInd.style.color = '#ff5555';
         } else {
-          banner.innerHTML = `<span class="success-text">[SYS] SUPABASE DB CONNECTED SUCCESSFULLY. (${res.data.length} RECORDS FOUND)</span>`;
+          banner.innerHTML = `<span class="success-text">[SYS] CONEXION EXITOSA A SUPABASE (${res.data.length} REGISTROS DETECTADOS)</span>`;
           dbInd.innerText = 'DB: CONNECTED';
         }
       }, 1000);
